@@ -19,7 +19,12 @@
 
   // --- State ---
   let is24Hour = localStorage.getItem('hub_clock_format') === '24';
-  let userName = localStorage.getItem('hub_user_name') || 'Alex Morgan';
+  let savedName = localStorage.getItem('hub_user_name');
+  if (!savedName || savedName === 'Alex Morgan' || savedName === 'Your Name') {
+    savedName = '許景翔 (Richard Hsu)';
+    localStorage.setItem('hub_user_name', savedName);
+  }
+  let userName = savedName;
   let activeTheme = localStorage.getItem('hub_theme') || 'dark';
 
   // --- DOM Elements ---
@@ -62,12 +67,29 @@
   }
 
   function getInitials(name) {
-    if (!name || !name.trim()) return 'ME';
-    const parts = name.trim().split(/\s+/);
-    if (parts.length === 1) {
-      return parts[0].substring(0, 2).toUpperCase();
+    if (!name || !name.trim()) return 'RH';
+    // Check if contains brackets like "許景翔 (Richard Hsu)"
+    const match = name.match(/\(([A-Za-z]+)\s*([A-Za-z]*)\)/);
+    if (match) {
+      const first = match[1] ? match[1][0] : '';
+      const second = match[2] ? match[2][0] : (match[1][1] || '');
+      return (first + second).toUpperCase();
     }
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    // Check for English words
+    const englishWords = name.replace(/[\u4e00-\u9fa5]/g, '').trim().split(/\s+/).filter(Boolean);
+    if (englishWords.length >= 2) {
+      return (englishWords[0][0] + englishWords[englishWords.length - 1][0]).toUpperCase();
+    } else if (englishWords.length === 1 && englishWords[0].length >= 2) {
+      return englishWords[0].substring(0, 2).toUpperCase();
+    }
+    // Chinese characters (e.g. 許景翔 -> 景翔)
+    const chineseChars = name.match(/[\u4e00-\u9fa5]/g);
+    if (chineseChars && chineseChars.length >= 2) {
+      return chineseChars.slice(-2).join('');
+    } else if (chineseChars && chineseChars.length === 1) {
+      return chineseChars[0];
+    }
+    return 'RH';
   }
 
   // --- Greeting Handler ---
@@ -174,7 +196,7 @@
 
   // --- Name Editing ---
   function applyUserName(name) {
-    const trimmed = name.trim() || 'Alex Morgan';
+    const trimmed = name.trim() || '許景翔 (Richard Hsu)';
     userName = trimmed;
     localStorage.setItem('hub_user_name', userName);
     userNameDisplay.textContent = userName;

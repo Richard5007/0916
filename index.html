@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Hub • Live Clock & Profile</title>
-  <meta name="description" content="Personal landing page featuring live precision clock, personalized greeting, and interactive profile.">
+  <title>許景翔 (Richard Hsu) • 資訊工程研究所 | Personal Page</title>
+  <meta name="description" content="許景翔 (Richard Hsu) - 資訊工程研究所 (Graduate Institute of CSIE). Personal portfolio, skills, projects, and live precision time dashboard.">
   
   <!-- Modern Fonts from Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,14 +20,21 @@
   <div class="ambient-glow glow-3" aria-hidden="true"></div>
 
   <!-- Main Container -->
-  <main class="page-container">
+  <div class="page-container">
     
-    <!-- Top Bar with Theme Switcher -->
+    <!-- Top Bar with Navigation & Theme Switcher -->
     <header class="top-nav">
       <div class="brand-pill">
         <span class="pulse-indicator"></span>
-        <span class="brand-label" id="statusLabel">ONLINE &bull; LOCAL TIME</span>
+        <span class="brand-label" id="statusLabel">CSIE LAB // ONLINE</span>
       </div>
+
+      <nav class="nav-links">
+        <a href="#profile" class="nav-link">About</a>
+        <a href="#clock" class="nav-link">Clock</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+      </nav>
 
       <div class="theme-controls">
         <button class="theme-btn active" data-theme="dark" id="themeDarkBtn" title="Cosmic Dark">
@@ -42,8 +49,8 @@
       </div>
     </header>
 
-    <!-- Glassmorphic Card -->
-    <section class="card profile-card" id="profileCard">
+    <!-- SECTION 1: PROFILE & ABOUT -->
+    <section class="card profile-card" id="profile">
       
       <!-- User Profile Header -->
       <div class="profile-header">
@@ -51,23 +58,22 @@
           <div class="avatar-glow"></div>
           <div class="avatar-ring">
             <div class="avatar-inner" id="avatarIcon">
-              <!-- Default monogram / user icon -->
-              <span class="avatar-initials" id="avatarInitials">ME</span>
+              <span class="avatar-initials" id="avatarInitials">JH</span>
             </div>
           </div>
-          <span class="status-badge" title="Active"></span>
+          <span class="status-badge" title="Active CSIE Graduate Student"></span>
         </div>
 
         <div class="profile-meta">
           <div class="greeting-bar">
-            <span class="greeting-badge" id="greetingText">Good Day</span>
+            <span class="greeting-badge" id="greetingText">Good Morning</span>
             <span class="greeting-sub" id="greetingEmoji">✨</span>
           </div>
 
           <!-- Name Display & In-place Editor -->
           <div class="name-editor-wrapper">
-            <h1 class="user-name" id="userNameDisplay" title="Click to edit your name">Your Name</h1>
-            <input type="text" class="name-input hidden" id="userNameInput" maxlength="32" placeholder="Enter your name" aria-label="Enter your name">
+            <h1 class="user-name" id="userNameDisplay" title="Click to edit display name">許景翔 (Richard Hsu)</h1>
+            <input type="text" class="name-input hidden" id="userNameInput" maxlength="40" placeholder="Enter your name" aria-label="Enter your name">
             <button class="edit-btn" id="editNameBtn" title="Edit name" aria-label="Edit name">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -76,14 +82,25 @@
             </button>
           </div>
 
-          <p class="user-title" id="userTitle">Welcome to my personal space</p>
+          <p class="user-title" id="userTitle">資訊工程研究所 • Graduate Institute of CSIE</p>
+          
+          <p class="user-bio">
+            致力於機器學習（Machine Learning）、深度視覺系統（Computer Vision）與分散式架構研發。專注於打造高效能演算法與高可用性軟體系統。
+          </p>
+
+          <div class="profile-tags">
+            <span class="spec-tag">🤖 Machine Learning</span>
+            <span class="spec-tag">⚡ Deep Learning</span>
+            <span class="spec-tag">🖥️ Computer Systems</span>
+            <span class="spec-tag">🌐 Full-Stack Dev</span>
+          </div>
         </div>
       </div>
 
-      <!-- Live Clock Display Section -->
-      <div class="clock-showcase" id="clockShowcase">
+      <!-- SECTION 2: LIVE PRECISION CLOCK -->
+      <div class="clock-showcase" id="clock">
         <div class="clock-label-bar">
-          <span class="section-tag">LIVE TIME</span>
+          <span class="section-tag">LIVE PRECISION CLOCK</span>
           <div class="clock-controls">
             <button class="toggle-pill" id="timeFormatToggle" title="Toggle 12h / 24h format">
               <span id="formatLabel">24H</span>
@@ -125,7 +142,7 @@
           <div class="detail-divider"></div>
           <div class="detail-item">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <span id="timezoneDisplay">GMT+8 (Asia/Shanghai)</span>
+            <span id="timezoneDisplay">GMT+8 (Asia/Taipei)</span>
           </div>
         </div>
       </div>
@@ -133,7 +150,7 @@
       <!-- Year Progress & Day Stats Bar -->
       <div class="progress-section">
         <div class="progress-header">
-          <span class="progress-title">2026 Year Progress</span>
+          <span class="progress-title">2026 Year Elapsed</span>
           <span class="progress-val" id="yearProgressPercent">70.9%</span>
         </div>
         <div class="progress-bar-track">
@@ -155,23 +172,198 @@
         </div>
       </div>
 
-      <!-- Quick Action / Interactive Links -->
-      <div class="quick-links">
-        <a href="#about" class="action-btn" id="aboutBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          About Me
-        </a>
-        <a href="#projects" class="action-btn" id="projectsBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-          Projects
-        </a>
-        <a href="mailto:hello@example.com" class="action-btn" id="contactBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-          Get in Touch
-        </a>
+    </section>
+
+    <!-- SECTION 3: SKILLS -->
+    <section class="card section-card" id="skills">
+      <div class="section-heading">
+        <div class="section-tag">TECH STACK & EXPERTISE</div>
+        <h2 class="section-title">Core Competencies & Skills</h2>
+        <p class="section-subtitle">資訊工程專業技能庫與專長領域</p>
       </div>
 
-      <!-- Quick Interactive Focus Mode Modal / Note Drawer (Expandable) -->
+      <div class="skills-grid">
+        <!-- Skill Group 1 -->
+        <div class="skill-category-card">
+          <div class="category-header">
+            <div class="category-icon">💻</div>
+            <h3 class="category-title">Programming Languages</h3>
+          </div>
+          <ul class="skill-list">
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Python</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 92%;"></div></div>
+            </li>
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">C / C++</span>
+                <span class="skill-level">Proficient</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 85%;"></div></div>
+            </li>
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">JavaScript (ES6+)</span>
+                <span class="skill-level">Proficient</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 88%;"></div></div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Skill Group 2 -->
+        <div class="skill-category-card">
+          <div class="category-header">
+            <div class="category-icon">🧠</div>
+            <h3 class="category-title">AI & Data Science</h3>
+          </div>
+          <ul class="skill-list">
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Machine Learning</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 90%;"></div></div>
+            </li>
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">PyTorch & Deep Learning</span>
+                <span class="skill-level">Proficient</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 86%;"></div></div>
+            </li>
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Computer Vision / OpenCV</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 80%;"></div></div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Skill Group 3 -->
+        <div class="skill-category-card">
+          <div class="category-header">
+            <div class="category-icon">⚙️</div>
+            <h3 class="category-title">Systems & Engineering</h3>
+          </div>
+          <ul class="skill-list">
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Linux & Shell Scripting</span>
+                <span class="skill-level">Proficient</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 88%;"></div></div>
+            </li>
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Git & GitHub Workflow</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 92%;"></div></div>
+            </li>
+            <li class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Docker & Web Systems</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+              <div class="skill-bar"><div class="skill-bar-inner" style="width: 78%;"></div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: PROJECTS -->
+    <section class="card section-card" id="projects">
+      <div class="section-heading">
+        <div class="section-tag">SELECTED WORKS</div>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">精選專案與學術研究成果</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1 (Featured) -->
+        <div class="project-card featured-project">
+          <div class="project-header">
+            <div class="project-badge">FEATURED // LIVE</div>
+            <h3 class="project-name">0916 Personal Hub & Live Clock Dashboard</h3>
+          </div>
+          <p class="project-desc">
+            基於 HTML5、Vanilla CSS3 與原生 JavaScript 開發的高質感毛玻璃個人主頁。整合即時高精度時鐘、自適應時段問候、姓名即時修改與 localStorage 記憶、多套動態主題切換，並自動部署至 GitHub Pages。
+          </p>
+          <div class="project-tech-stack">
+            <span class="tech-pill">JavaScript ES6+</span>
+            <span class="tech-pill">CSS3 Glassmorphism</span>
+            <span class="tech-pill">GitHub Pages</span>
+            <span class="tech-pill">Responsive Design</span>
+          </div>
+          <div class="project-links">
+            <a href="https://richard5007.github.io/0916/" target="_blank" rel="noopener noreferrer" class="proj-link primary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              Live Demo
+            </a>
+            <a href="https://github.com/Richard5007/0916" target="_blank" rel="noopener noreferrer" class="proj-link secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              GitHub Repo
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-badge">AI & VISION</div>
+            <h3 class="project-name">Edge-AI Real-Time Vision Pipeline</h3>
+          </div>
+          <p class="project-desc">
+            針對邊緣運算裝置最佳化之即時影像辨識與追蹤系統。結合 PyTorch 輕量化神經網路、ONNX Runtime 加速與 OpenCV 影像串流前處理，於低功耗設備達成 30+ FPS 高吞吐推論。
+          </p>
+          <div class="project-tech-stack">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">PyTorch</span>
+            <span class="tech-pill">OpenCV</span>
+            <span class="tech-pill">ONNX Runtime</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Richard5007/0916" target="_blank" rel="noopener noreferrer" class="proj-link secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              View Research Code
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-badge">SYSTEMS</div>
+            <h3 class="project-name">Distributed Task Scheduler & Monitor</h3>
+          </div>
+          <p class="project-desc">
+            高併發分散式非同步任務分派與即時健康狀態監控平台。支援動態負載平衡、失敗自動重試與 WebSocket 即時狀態遙測儀表板。
+          </p>
+          <div class="project-tech-stack">
+            <span class="tech-pill">C / C++</span>
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Docker</span>
+            <span class="tech-pill">WebSocket</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Richard5007/0916" target="_blank" rel="noopener noreferrer" class="proj-link secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              View Project
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: INSPIRATION & QUICK ACTIONS -->
+    <section class="card section-card">
       <div class="quick-note-section">
         <div class="note-box">
           <div class="note-icon">💡</div>
@@ -182,14 +374,29 @@
         </div>
       </div>
 
+      <div class="quick-links">
+        <a href="https://github.com/Richard5007" target="_blank" rel="noopener noreferrer" class="action-btn" id="githubBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub Profile
+        </a>
+        <a href="https://richard5007.github.io/0916/" class="action-btn" id="projectsBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          Live Projects
+        </a>
+        <a href="mailto:richard.hsu@example.com" class="action-btn" id="contactBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact Email
+        </a>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="page-footer">
-      <p>Crafted with precision &bull; <span id="footerYear">2026</span> Personal Hub</p>
+      <p>許景翔 (Richard Hsu) &bull; 資訊工程研究所 &bull; <span id="footerYear">2026</span> Personal Hub</p>
+      <p class="footer-sub">Crafted with Antigravity &bull; Deployed on GitHub Pages</p>
     </footer>
 
-  </main>
+  </div>
 
   <script src="app.js"></script>
 </body>
