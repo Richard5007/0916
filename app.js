@@ -1,33 +1,33 @@
 /**
- * Personal Hub • Interactive Live Clock & Profile Application
+ * 許景翔 • 個人主頁與即時時鐘儀表板 (Personal Hub)
  */
 
 (function () {
   'use strict';
 
-  // --- Quotes Library ---
+  // --- 經典時間與專注名言庫 (中文) ---
   const quotes = [
-    { text: "Time is what we want most, but what we use worst.", author: "William Penn" },
-    { text: "The two most powerful warriors are patience and time.", author: "Leo Tolstoy" },
-    { text: "Lost time is never found again.", author: "Benjamin Franklin" },
-    { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
-    { text: "Dwell on the beauty of life. Watch the stars, and see yourself running with them.", author: "Marcus Aurelius" },
-    { text: "The future depends on what you do today.", author: "Mahatma Gandhi" },
-    { text: "It is not that we have a short time to live, but that we waste a lot of it.", author: "Seneca" }
+    { text: "時間是我們最想要、卻也最浪費的東西。", author: "威廉·佩恩 (William Penn)" },
+    { text: "最強大的兩位戰士，就是耐心與時間。", author: "列夫·托爾斯泰 (Leo Tolstoy)" },
+    { text: "失去的時間，永遠無法再尋回。", author: "班傑明·富蘭克林 (Benjamin Franklin)" },
+    { text: "你的時間有限，不要浪費時間去過別人的生活。", author: "史蒂夫·賈伯斯 (Steve Jobs)" },
+    { text: "專注於生命的美好。凝視繁星，想像自己與星辰一同奔馳。", author: "馬可·奧理略 (Marcus Aurelius)" },
+    { text: "未來，取決於你今天做了什麼。", author: "聖雄甘地 (Mahatma Gandhi)" },
+    { text: "並非我們能擁有的時間太短，而是我們浪費了太多。", author: "塞內卡 (Seneca)" }
   ];
   let quoteIndex = 0;
 
-  // --- State ---
+  // --- 狀態管理 ---
   let is24Hour = localStorage.getItem('hub_clock_format') === '24';
   let savedName = localStorage.getItem('hub_user_name');
-  if (!savedName || savedName === 'Alex Morgan' || savedName === 'Your Name') {
-    savedName = '許景翔 (Richard Hsu)';
+  if (!savedName || savedName === 'Alex Morgan' || savedName === 'Your Name' || savedName === '許景翔 (Richard Hsu)') {
+    savedName = '許景翔';
     localStorage.setItem('hub_user_name', savedName);
   }
   let userName = savedName;
   let activeTheme = localStorage.getItem('hub_theme') || 'dark';
 
-  // --- DOM Elements ---
+  // --- DOM 元素快取 ---
   const hoursEl = document.getElementById('hours');
   const minutesEl = document.getElementById('minutes');
   const secondsEl = document.getElementById('seconds');
@@ -61,53 +61,47 @@
 
   const themeBtns = document.querySelectorAll('.theme-btn');
 
-  // --- Helpers ---
+  // --- 工具函式 ---
   function padZero(num) {
     return num.toString().padStart(2, '0');
   }
 
   function getInitials(name) {
-    if (!name || !name.trim()) return 'RH';
-    // Check if contains brackets like "許景翔 (Richard Hsu)"
-    const match = name.match(/\(([A-Za-z]+)\s*([A-Za-z]*)\)/);
-    if (match) {
-      const first = match[1] ? match[1][0] : '';
-      const second = match[2] ? match[2][0] : (match[1][1] || '');
-      return (first + second).toUpperCase();
-    }
-    // Check for English words
-    const englishWords = name.replace(/[\u4e00-\u9fa5]/g, '').trim().split(/\s+/).filter(Boolean);
-    if (englishWords.length >= 2) {
-      return (englishWords[0][0] + englishWords[englishWords.length - 1][0]).toUpperCase();
-    } else if (englishWords.length === 1 && englishWords[0].length >= 2) {
-      return englishWords[0].substring(0, 2).toUpperCase();
-    }
-    // Chinese characters (e.g. 許景翔 -> 景翔)
-    const chineseChars = name.match(/[\u4e00-\u9fa5]/g);
+    if (!name || !name.trim()) return '景翔';
+    const trimmed = name.trim();
+    
+    // 若為中文姓名（例如：許景翔 -> 取「景翔」；許大寶 -> 取「大寶」）
+    const chineseChars = trimmed.match(/[\u4e00-\u9fa5]/g);
     if (chineseChars && chineseChars.length >= 2) {
       return chineseChars.slice(-2).join('');
     } else if (chineseChars && chineseChars.length === 1) {
       return chineseChars[0];
     }
-    return 'RH';
+
+    // 若為英文名（取首字母縮寫）
+    const parts = trimmed.split(/\s+/);
+    if (parts.length === 1) {
+      return parts[0].substring(0, 2).toUpperCase();
+    }
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   }
 
-  // --- Greeting Handler ---
+  // --- 動態時段問候語 ---
   function updateGreeting(hour) {
-    let greeting = 'Good Day';
+    let greeting = '你好';
     let emoji = '✨';
 
     if (hour >= 5 && hour < 12) {
-      greeting = 'Good Morning';
+      greeting = '早安，美好的一天';
       emoji = '🌅';
     } else if (hour >= 12 && hour < 17) {
-      greeting = 'Good Afternoon';
+      greeting = '午安，持續專注前進';
       emoji = '⚡';
-    } else if (hour >= 17 && hour < 21) {
-      greeting = 'Good Evening';
+    } else if (hour >= 17 && hour < 22) {
+      greeting = '傍晚好，享受愜意時光';
       emoji = '🌆';
     } else {
-      greeting = 'Good Night';
+      greeting = '夜深了，注意休息與沉澱';
       emoji = '🌌';
     }
 
@@ -115,33 +109,33 @@
     greetingEmoji.textContent = emoji;
   }
 
-  // --- Year & Day Stats ---
+  // --- 年度進度與日曆統計 ---
   function updateYearStats(now) {
     const startOfYear = new Date(now.getFullYear(), 0, 1);
     const isLeap = new Date(now.getFullYear(), 1, 29).getMonth() === 1;
     const totalDays = isLeap ? 366 : 365;
     
-    // Day of year
+    // 當年第幾天
     const diffDays = Math.floor((now - startOfYear) / (1000 * 60 * 60 * 24)) + 1;
-    dayOfYearEl.textContent = `${diffDays} / ${totalDays}`;
+    dayOfYearEl.textContent = `${diffDays} / ${totalDays} 天`;
 
-    // Year Progress %
+    // 年度進度百分比
     const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
     const progress = ((now - startOfYear) / (endOfYear - startOfYear)) * 100;
     const roundedProgress = progress.toFixed(1);
     yearProgressPercent.textContent = `${roundedProgress}%`;
     yearProgressBar.style.width = `${roundedProgress}%`;
 
-    // Week Number (ISO calculation)
+    // 週數計算 (ISO 8601)
     const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
     const dayNum = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
     const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-    weekOfYearEl.textContent = `Week ${weekNo}`;
+    weekOfYearEl.textContent = `第 ${weekNo} 週`;
 
-    // Day of week
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    // 星期名稱
+    const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
     dayOfWeekBadge.textContent = days[now.getDay()];
 
     if (footerYear) {
@@ -149,24 +143,24 @@
     }
   }
 
-  // --- Clock Updater ---
+  // --- 即時時鐘核心邏輯 ---
   function updateClock() {
     const now = new Date();
     const rawHours = now.getHours();
     const rawMinutes = now.getMinutes();
     const rawSeconds = now.getSeconds();
 
-    // Greeting
+    // 更新時段問候
     updateGreeting(rawHours);
 
-    // Format Hours
+    // 格式化小時與 12/24 制切換
     let displayHours = rawHours;
     let period = '';
 
     if (!is24Hour) {
-      period = rawHours >= 12 ? 'PM' : 'AM';
+      period = rawHours >= 12 ? '下午' : '上午';
       displayHours = rawHours % 12;
-      displayHours = displayHours ? displayHours : 12; // 0 becomes 12
+      displayHours = displayHours ? displayHours : 12; // 0 點顯示為 12
       ampmContainer.style.display = 'flex';
       ampmEl.textContent = period;
     } else {
@@ -177,26 +171,31 @@
     minutesEl.textContent = padZero(rawMinutes);
     secondsEl.textContent = padZero(rawSeconds);
 
-    // Date display
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    fullDateDisplay.textContent = now.toLocaleDateString(undefined, dateOptions);
+    // 中文日期格式
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const date = now.getDate();
+    const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+    const dayName = days[now.getDay()];
+    fullDateDisplay.textContent = `${year}年${month}月${date}日 ${dayName}`;
 
-    // Timezone display
+    // 在地時區顯示
     try {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const offsetHours = -now.getTimezoneOffset() / 60;
       const offsetStr = `GMT${offsetHours >= 0 ? '+' + offsetHours : offsetHours}`;
-      timezoneDisplay.textContent = `${offsetStr} (${timeZone})`;
+      const tzName = timeZone.includes('Taipei') ? '台北標準時間' : timeZone;
+      timezoneDisplay.textContent = `${offsetStr} (${tzName})`;
     } catch (e) {
-      timezoneDisplay.textContent = 'Local Time';
+      timezoneDisplay.textContent = '在地標準時間';
     }
 
     updateYearStats(now);
   }
 
-  // --- Name Editing ---
+  // --- 原地編輯姓名功能 ---
   function applyUserName(name) {
-    const trimmed = name.trim() || '許景翔 (Richard Hsu)';
+    const trimmed = name.trim() || '許景翔';
     userName = trimmed;
     localStorage.setItem('hub_user_name', userName);
     userNameDisplay.textContent = userName;
@@ -239,9 +238,9 @@
 
   userNameInput.addEventListener('blur', finishEditingName);
 
-  // --- Clock Format Toggle ---
+  // --- 時鐘制式切換 (12H / 24H) ---
   function updateFormatButtonState() {
-    formatLabel.textContent = is24Hour ? '24H' : '12H';
+    formatLabel.textContent = is24Hour ? '24小時制' : '12小時制';
   }
 
   timeFormatToggle.addEventListener('click', () => {
@@ -251,7 +250,7 @@
     updateClock();
   });
 
-  // --- Copy Time Feature ---
+  // --- 一鍵複製時間功能 ---
   copyTimeBtn.addEventListener('click', () => {
     const h = hoursEl.textContent;
     const m = minutesEl.textContent;
@@ -260,24 +259,24 @@
     const textToCopy = `${h}:${m}:${s}${ampmText} - ${fullDateDisplay.textContent}`;
 
     navigator.clipboard.writeText(textToCopy).then(() => {
-      copyFeedback.textContent = 'Copied! ✓';
+      copyFeedback.textContent = '已複製！ ✓';
       copyTimeBtn.style.borderColor = 'var(--accent-cyan)';
       setTimeout(() => {
-        copyFeedback.textContent = 'Copy';
+        copyFeedback.textContent = '複製時間';
         copyTimeBtn.style.borderColor = '';
       }, 1800);
     }).catch(() => {
-      copyFeedback.textContent = 'Copied!';
+      copyFeedback.textContent = '已複製！';
       setTimeout(() => {
-        copyFeedback.textContent = 'Copy';
+        copyFeedback.textContent = '複製時間';
       }, 1500);
     });
   });
 
-  // --- Quote Rotation ---
+  // --- 名言輪播 ---
   function displayQuote(index) {
     const q = quotes[index % quotes.length];
-    quoteText.innerHTML = `"${q.text}" &mdash; <span style="font-weight:600; color:var(--text-primary)">${q.author}</span>`;
+    quoteText.innerHTML = `「${q.text}」&mdash; <span style="font-weight:600; color:var(--text-primary)">${q.author}</span>`;
   }
 
   quoteRefreshBtn.addEventListener('click', () => {
@@ -285,7 +284,7 @@
     displayQuote(quoteIndex);
   });
 
-  // --- Theme Switching ---
+  // --- 主題切換 (Cosmic Dark / Aurora / Sunset) ---
   function applyTheme(themeName) {
     activeTheme = themeName;
     document.documentElement.setAttribute('data-theme', themeName);
@@ -307,14 +306,14 @@
     });
   });
 
-  // --- Initialization ---
+  // --- 初始化執行 ---
   applyUserName(userName);
   applyTheme(activeTheme);
   updateFormatButtonState();
   updateClock();
   displayQuote(0);
 
-  // Tick every second precisely
+  // 每秒平滑更新
   setInterval(updateClock, 1000);
 
 })();
