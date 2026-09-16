@@ -2,7 +2,9 @@
 
 An aesthetic, responsive personal landing page featuring a real-time precision digital clock, dynamic time-of-day greetings, interactive color themes, and an editable personal profile.
 
-![Demo Preview](preview.png) *(Optional)*
+🔗 **Live Demo**: [https://richard5007.github.io/0916/](https://richard5007.github.io/0916/)
+
+![Preview](image.png)
 
 ## ✨ Features
 
